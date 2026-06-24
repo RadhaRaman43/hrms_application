@@ -34,7 +34,7 @@ public class AuthController {
     private UserMapper mapper;*/
 
     @PostMapping("/api/users/register")
-    public ResponseEntity<?> register(/*@Valid*/ @RequestBody User user) {
+    public ResponseEntity<?> register(@RequestBody User user) {
         if(user.getEmail()==null||user.getEmail().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new LoginResponse(false, "Please Enter Valid Email", null, null));
@@ -44,7 +44,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new LoginResponse(false, "Email is already used. Use another email", null, null));
         }
-        System.out.println("print pass "+user.getPassword());
+        //System.out.println("print pass "+user.getPassword());
         if(user.getPassword()==null||user.getPassword().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new LoginResponse(false, "Please Enter Valid Password", null, null));
@@ -112,7 +112,6 @@ public class AuthController {
     }
     @PostMapping("/api/auth/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-
         try {
             User user;
             try {
@@ -127,13 +126,11 @@ public class AuthController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                         .body(new LoginResponse(false, "Enter valid password", null, null));
             }
-
             // ✅ Authenticate directly (best practice)
             authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getEmail(),
-                            request.getPassword()
-                    )
+                            request.getPassword())
             );
 
             // ✅ If authentication passes → get user
@@ -155,9 +152,6 @@ public class AuthController {
 
     @PostMapping("/api/forgot/send-otp")
     public ResponseEntity<?> sendOtp(@RequestParam String input) {
-
-        //otpService.sendOtp(input);
-
         return ResponseEntity.ok("OTP sent");
     }
 

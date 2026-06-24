@@ -36,7 +36,6 @@ public class UserService {
         num++;
         return String.format("CUSEMP%03d", num);
     }
-
     public void updatePassword(String emailOrPhone, String password) {
         //User user = repo.findUser(emailOrPhone);
         //user.setPassword(passwordEncoder.encode(password));

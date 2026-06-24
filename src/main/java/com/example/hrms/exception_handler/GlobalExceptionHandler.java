@@ -44,7 +44,6 @@ public class GlobalExceptionHandler {
     // ✅ 3. Handle IllegalArgumentException (custom errors)
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<?> handleIllegalArgument(IllegalArgumentException ex) {
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(Map.of("error", ex.getMessage()));
     }

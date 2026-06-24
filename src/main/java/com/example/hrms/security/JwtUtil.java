@@ -11,7 +11,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "ThisIsASuperSecureKeyForJWTTokenGeneration123456"; // 32+ chars
+    private static final String SECRET_KEY = "ThisIsASuperSecureKeyForJWTTokenGenerationOfHrmsApplication6395326856"; // 32+ chars
 
     private static final long EXPIRATION_TIME = 86400000;
 
@@ -33,7 +33,7 @@ public class JwtUtil {
                 .setSubject(email)
                 .claim("type", "RESET")
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + + 15 * 60 * 1000))
                 .signWith(key)
                 .compact();
     }
