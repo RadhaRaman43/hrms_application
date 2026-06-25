@@ -68,6 +68,7 @@ public class User {
     @NotBlank
     @Column(unique = true, nullable = false)
     private String employeeId;
+
     private String isHo;
     private String locationId;
     private String shiftCode;
@@ -87,14 +88,6 @@ public class User {
 
     private Integer passwordExpiryDays;
 
-    @NotBlank
-    @Column(nullable = false)
-    @Size(min = 3, max = 500)
-    private String address1;
-    @NotBlank
-    @Column(nullable = false)
-    @Size(min = 3, max = 500)
-    private String address2;
     @NotBlank
     @Column(nullable = false)
     @Size(min = 3, max = 100)
