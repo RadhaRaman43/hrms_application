@@ -1,8 +1,8 @@
 package com.example.hrms.controllers;
 
-import com.example.hrms.entity.user.LoginRequest;
-import com.example.hrms.entity.user.LoginResponse;
-import com.example.hrms.entity.user.User;
+import com.example.hrms.dto.user_dto.LoginResponseDto;
+import com.example.hrms.dto.user_dto.LoginRequestDto;
+import com.example.hrms.Modals.user.User;
 import com.example.hrms.security.JwtUtil;
 import com.example.hrms.service.user_service.user_service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,27 +37,27 @@ public class AuthController {
     public ResponseEntity<?> register(@RequestBody User user) {
         if(user.getEmail()==null||user.getEmail().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter Valid Email", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter Valid Email", null, null));
         }
         //  Check email already exists
         if (service.existsByEmail(user.getEmail())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Email is already used. Use another email", null, null));
+                    .body(new LoginResponseDto(false, "Email is already used. Use another email", null, null));
         }
         //System.out.println("print pass "+user.getPassword());
         if(user.getPassword()==null||user.getPassword().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter Valid Password", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter Valid Password", null, null));
         }
-        user.setEmployeeId(service.generateEmployeeId());
-        System.out.println(user.getEmployeeId());
+        user.setUserId(service.generateEmployeeId());
+        System.out.println(user.getUserId());
         if(user.getFirstname()==null||user.getFirstname().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter First Name", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter First Name", null, null));
         }
         if(user.getLastname()==null||user.getLastname().isEmpty()){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter Last Name", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter Last Name", null, null));
         }
         if(user.getMiddlename()!=null || user.getMiddlename().equals("")){
             System.out.println("middle name is not empty ");
@@ -67,33 +67,32 @@ public class AuthController {
             user.setUsername(user.getFirstname()+" "+user.getLastname());
         }
 
-        if(user.getAddress1()==null||user.getAddress1().equals("")){
+       /* if(user.getAddress1()==null||user.getAddress1().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter Address1", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter Address1", null, null));
         }
         if(user.getAddress2()==null||user.getAddress2().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter Address2", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter Address2", null, null));
         }
+
         if(user.getCity()==null||user.getCity().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter City", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter City", null, null));
         }
         if(user.getPostCode()==null||user.getPostCode().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter Post Code", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter Post Code", null, null));
         }
         if(user.getState()==null||user.getState().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter State", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter State", null, null));
         }
-        if(user.getPhoneNo()==null||user.getPhoneNo().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter Mobile No", null, null));
-        }
+
+
         if(user.getGender()==null||user.getGender().equals("")){
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponse(false, "Please Enter Gender", null, null));
+                    .body(new LoginResponseDto(false, "Please Enter Gender", null, null));
         }
         user.setIsActive(true);
 
@@ -101,30 +100,35 @@ public class AuthController {
         //  Default role
         if (user.getRole() == null || user.getRole().isEmpty()) {
             user.setRole("employee");
+        }*/
+
+        if(user.getPhoneNo()==null||user.getPhoneNo().equals("")){
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new LoginResponseDto(false, "Please Enter Mobile No", null, null));
         }
 
         User savedUser = service.register(user);
         //UserResponseDTO response = mapper.toDTO(savedUser);
 
         return ResponseEntity.ok(
-                new LoginResponse(true, "User registered successfully", null, savedUser)
+                new LoginResponseDto(true, "User registered successfully", null, savedUser)
         );
     }
     @PostMapping("/api/auth/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto request) {
         try {
             User user;
             try {
                 user = service.findByEmail(request.getEmail());
             } catch (UsernameNotFoundException e) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(new LoginResponse(false, "Enter valid email", null, null));
+                        .body(new LoginResponseDto(false, "Enter valid email", null, null));
             }
 
             // ✅ Step 2: Check password manually
             if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                        .body(new LoginResponse(false, "Enter valid password", null, null));
+                        .body(new LoginResponseDto(false, "Enter valid password", null, null));
             }
             // ✅ Authenticate directly (best practice)
             authManager.authenticate(
@@ -140,13 +144,13 @@ public class AuthController {
             System.out.println("user detail "+user);
             //UserResponseDTO response = mapper.toDTO(user);
             return ResponseEntity.ok(
-                    new LoginResponse(true, "Login successful", token, user)
+                    new LoginResponseDto(true, "Login successful", token, user)
             );
 
 
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new LoginResponse(false, "Login failed", null, null));
+                    .body(new LoginResponseDto(false, "Login failed", null, null));
         }
     }
 

@@ -1,20 +1,36 @@
-package com.example.hrms.entity.user;
+package com.example.hrms.Modals.user;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "bank_detail")
-@Data
 public class BankDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Column(nullable = false)
     private String bankName;
-    private String accountNumber;
-    private String ifscCode;
+
+    @NotBlank
+    @Column(nullable = false)
     private String accountHolderName;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String accountNumber;
+
+    @NotBlank
+    @Column(nullable = false)
+    private String ifscCode;
+
     private String branchName;
 
     @OneToOne

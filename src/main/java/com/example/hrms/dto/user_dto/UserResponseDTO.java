@@ -17,16 +17,13 @@ public class UserResponseDTO {
 
     // personal
     private String phoneNo;
-    private String gender;
-    private LocalDate dob;
     private String otherMobileNo;
 
     // organization
     private String department;
     private String designation;
-    private String employeeId;
+    private String userId;
     private String role;
-    private Boolean isActive;
     private String isHo;
     private String locationId;
     private String shiftCode;
@@ -37,19 +34,6 @@ public class UserResponseDTO {
     private String companyId;
     private String profile;
     private String userType;
-
-    // address
-    private String address1;
-    private String address2;
-    private String city;
-    private String postCode;
-    private String state;
-
-    // system fields
-    private LocalDateTime joiningDate;
-    private LocalDateTime updatedDate;
-
-    // 🔥 calculated field
-    private int passwordExpiryDate;
+    private Integer passwordExpiryDays;
 
 }

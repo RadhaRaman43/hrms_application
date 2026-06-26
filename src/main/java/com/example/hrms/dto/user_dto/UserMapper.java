@@ -1,6 +1,6 @@
 package com.example.hrms.dto.user_dto;
 
-import com.example.hrms.entity.user.User;
+import com.example.hrms.Modals.user.User;
 import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;

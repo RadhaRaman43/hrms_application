@@ -1,6 +1,6 @@
-package com.example.hrms.repository.user_repo;
+package com.example.hrms.repository;
 
-import com.example.hrms.entity.user.User;
+import com.example.hrms.Modals.user.User;
 import feign.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

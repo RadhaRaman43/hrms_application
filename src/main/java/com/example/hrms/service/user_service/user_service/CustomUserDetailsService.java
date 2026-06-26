@@ -1,7 +1,7 @@
 package com.example.hrms.service.user_service.user_service;
 
-import com.example.hrms.entity.user.User;
-import com.example.hrms.repository.user_repo.UserRepository;
+import com.example.hrms.Modals.user.User;
+import com.example.hrms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

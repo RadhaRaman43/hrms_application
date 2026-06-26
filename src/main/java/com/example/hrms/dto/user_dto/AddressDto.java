@@ -1,5 +1,8 @@
 package com.example.hrms.dto.user_dto;
 
+import lombok.Data;
+
+@Data
 public class AddressDto {
     private String houseNo;
     private String village;

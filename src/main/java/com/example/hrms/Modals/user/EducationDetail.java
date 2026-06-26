@@ -1,11 +1,14 @@
-package com.example.hrms.entity.user;
+package com.example.hrms.Modals.user;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "education_detail")
-@Data
 public class EducationDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

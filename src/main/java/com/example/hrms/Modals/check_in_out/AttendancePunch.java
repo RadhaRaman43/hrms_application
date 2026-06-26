@@ -1,8 +1,7 @@
-package com.example.hrms.entity.check_in_out;
+package com.example.hrms.Modals.check_in_out;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 

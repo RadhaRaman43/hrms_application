@@ -1,13 +1,16 @@
-package com.example.hrms.entity.user;
+package com.example.hrms.Modals.user;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "children_details")
-@Data
 public class ChildDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

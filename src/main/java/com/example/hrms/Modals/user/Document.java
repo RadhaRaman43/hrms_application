@@ -1,7 +1,12 @@
-package com.example.hrms.entity.user;
+package com.example.hrms.Modals.user;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "document")
 public class Document {

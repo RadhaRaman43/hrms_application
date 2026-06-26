@@ -1,11 +1,14 @@
-package com.example.hrms.entity.user;
+package com.example.hrms.Modals.user;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "identical_detail")
-@Data
 public class IdentityDetail {
 
     @Id

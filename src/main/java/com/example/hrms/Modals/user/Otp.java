@@ -1,15 +1,15 @@
-package com.example.hrms.entity.user;
+package com.example.hrms.Modals.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
 public class Otp {
     @Id
     @GeneratedValue
