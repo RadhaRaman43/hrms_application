@@ -19,7 +19,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = repo.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        String role = user.getRole();
+        String role = user.getRoleId();
         if (role == null || role.isEmpty()) {
             role = "employee"; // fallback
         }

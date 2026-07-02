@@ -1,5 +1,6 @@
 package com.example.hrms.exception_handler;
 
+import com.example.hrms.dto.user_dto.LoginResponseDto;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,4 +59,21 @@ public class GlobalExceptionHandler {
                         "details", ex.getMessage()
                 ));
     }
+
+
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<LoginResponseDto> handleAlreadyExists(
+            ResourceAlreadyExistsException ex) {
+
+        LoginResponseDto response = new LoginResponseDto(
+                false,
+                ex.getMessage(),
+                null,
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(response);
+    }
+
 }

@@ -16,6 +16,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     Optional<User> findByEmailOrPhone(@Param("identifier") String identifier);
     boolean existsByEmail(String email);
 
-    @Query(value = "SELECT employee_id FROM users ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    @Query(value = "SELECT user_id FROM users ORDER BY id DESC LIMIT 1", nativeQuery = true)
     String findLastEmployeeId();
 }

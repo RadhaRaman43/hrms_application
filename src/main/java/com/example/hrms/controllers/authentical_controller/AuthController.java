@@ -1,10 +1,12 @@
-package com.example.hrms.controllers;
+package com.example.hrms.controllers.authentical_controller;
 
 import com.example.hrms.dto.user_dto.LoginResponseDto;
 import com.example.hrms.dto.user_dto.LoginRequestDto;
 import com.example.hrms.Modals.user.User;
+import com.example.hrms.dto_request.AuthenticationRequestDto;
 import com.example.hrms.security.JwtUtil;
 import com.example.hrms.service.user_service.user_service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,78 +36,8 @@ public class AuthController {
     private UserMapper mapper;*/
 
     @PostMapping("/api/users/register")
-    public ResponseEntity<?> register(@RequestBody User user) {
-        if(user.getEmail()==null||user.getEmail().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter Valid Email", null, null));
-        }
-        //  Check email already exists
-        if (service.existsByEmail(user.getEmail())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Email is already used. Use another email", null, null));
-        }
-        //System.out.println("print pass "+user.getPassword());
-        if(user.getPassword()==null||user.getPassword().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter Valid Password", null, null));
-        }
-        user.setUserId(service.generateEmployeeId());
-        System.out.println(user.getUserId());
-        if(user.getFirstname()==null||user.getFirstname().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter First Name", null, null));
-        }
-        if(user.getLastname()==null||user.getLastname().isEmpty()){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter Last Name", null, null));
-        }
-        if(user.getMiddlename()!=null || user.getMiddlename().equals("")){
-            System.out.println("middle name is not empty ");
-            user.setUsername(user.getFirstname()+" "+user.getMiddlename()+" "+user.getLastname());
-        }
-        else {
-            user.setUsername(user.getFirstname()+" "+user.getLastname());
-        }
+    public ResponseEntity<?> register(@Valid @RequestBody AuthenticationRequestDto user) {
 
-       /* if(user.getAddress1()==null||user.getAddress1().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter Address1", null, null));
-        }
-        if(user.getAddress2()==null||user.getAddress2().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter Address2", null, null));
-        }
-
-        if(user.getCity()==null||user.getCity().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter City", null, null));
-        }
-        if(user.getPostCode()==null||user.getPostCode().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter Post Code", null, null));
-        }
-        if(user.getState()==null||user.getState().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter State", null, null));
-        }
-
-
-        if(user.getGender()==null||user.getGender().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter Gender", null, null));
-        }
-        user.setIsActive(true);
-
-
-        //  Default role
-        if (user.getRole() == null || user.getRole().isEmpty()) {
-            user.setRole("employee");
-        }*/
-
-        if(user.getPhoneNo()==null||user.getPhoneNo().equals("")){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(new LoginResponseDto(false, "Please Enter Mobile No", null, null));
-        }
 
         User savedUser = service.register(user);
         //UserResponseDTO response = mapper.toDTO(savedUser);

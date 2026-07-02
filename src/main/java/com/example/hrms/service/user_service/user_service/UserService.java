@@ -1,6 +1,8 @@
 package com.example.hrms.service.user_service.user_service;
 
+import com.example.hrms.Mapper.UserMapper;
 import com.example.hrms.Modals.user.User;
+import com.example.hrms.dto_request.AuthenticationRequestDto;
 import com.example.hrms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,12 +13,16 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Autowired
     private UserRepository repo;
+    @Autowired
+    private UserMapper mapper;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public User register(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public User register(AuthenticationRequestDto users) {
+        users.setPassword(passwordEncoder.encode(users.getPassword()));
+        User user = mapper.toEntity(users);
+        user.setUserId(generateEmployeeId());
         return repo.save(user);
     }
 
@@ -26,6 +32,7 @@ public class UserService {
     public boolean existsByEmail(String email) {
         return repo.existsByEmail(email);
     }
+
     public String generateEmployeeId() {
         String lastId = repo.findLastEmployeeId();
         if (lastId == null) {

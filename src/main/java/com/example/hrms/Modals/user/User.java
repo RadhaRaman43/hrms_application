@@ -62,6 +62,7 @@ public class User {
     private String managerId;
     private String grade;
     private String block;
+
     @UpdateTimestamp
     private LocalDateTime updated_date;
     private String roleId;

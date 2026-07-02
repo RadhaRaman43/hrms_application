@@ -27,6 +27,6 @@ public class Role {
     private Boolean active = true;
     private Long parentMenuId;
 
-    @OneToMany(mappedBy = "role")
-    private List<User> users = new ArrayList<>();
+//    @OneToMany(mappedBy = "role_id")
+//    private List<User> users = new ArrayList<>();
 }
